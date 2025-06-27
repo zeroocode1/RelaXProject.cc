@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RelaX Project - Бесплатная версия</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #0c0b0b;
+            --primary: #ffffff;
+            --secondary: #cccccc;
+            --light: #f0f0f0;
+            --text-light: #f8f8f8;
+            --text-glow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.2);
+            --primary-glow: 0 0 15px rgba(255, 255, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 5% 15%, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 30%),
+                radial-gradient(circle at 95% 85%, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 30%),
+                radial-gradient(circle at 50% 50%, rgba(20, 20, 20, 0.8) 0%, rgba(12, 11, 11, 1) 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            font-weight: 400;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 900;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        /* Header Styles */
+        header {
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(12, 11, 11, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            text-shadow: var(--primary-glow);
+            letter-spacing: 1px;
+        }
+        
+        .saturn-icon {
+            width: 36px;
+            height: 36px;
+            margin-right: 12px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .saturn-icon::before,
+        .saturn-icon::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+        }
+        
+        .saturn-icon::before {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--primary);
+            box-shadow: var(--primary-glow);
+            z-index: 2;
+        }
+        
+        .saturn-icon::after {
+            width: 36px;
+            height: 7px;
+            border: 2px solid var(--primary);
+            transform: rotate(-20deg);
+            box-shadow: var(--primary-glow);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s;
+            text-shadow: var(--text-glow);
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+            text-shadow: var(--primary-glow);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        /* Main content */
+        .main-content {
+            margin-top: 80px;
+            padding-bottom: 60px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Program Section */
+        .program-section {
+            background: rgba(25, 24, 24, 0.7);
+            border-radius: 18px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+        }
+        
+        .program-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .program-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-shadow: var(--primary-glow);
+        }
+        
+        .program-header p {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: var(--text-glow);
+        }
+        
+        .program-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-box {
+            background: rgba(30, 29, 29, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 45px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+        
+        .feature-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--light);
+            text-shadow: 0 0 10px rgba(240, 240, 240, 0.3);
+        }
+        
+        .feature-box p {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            font-weight: 400;
+            text-shadow: var(--text-glow);
+        }
+        
+        .download-btn {
+            display: inline-block;
+            padding: 16px 50px;
+            font-size: 18px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 35px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            cursor: pointer;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+        
+        .download-btn:active {
+            transform: translateY(-2px);
+        }
+        
+        /* Settings Section */
+        .settings-section {
+            background: rgba(25, 24, 24, 0.7);
+            border-radius: 18px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+        }
+        
+        .settings-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .settings-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-shadow: var(--primary-glow);
+        }
+        
+        .settings-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .setting-card {
+            background: rgba(30, 29, 29, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        
+        .setting-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .setting-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--light);
+            text-shadow: 0 0 10px rgba(240, 240, 240, 0.3);
+            display: flex;
+            align-items: center;
+        }
+        
+        .setting-card h2 i {
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .setting-card p {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            font-weight: 400;
+            text-shadow: var(--text-glow);
+            margin-top: 10px;
+        }
+        
+        /* Language and Theme Options */
+        .options-panel {
+            background: rgba(30, 29, 29, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: none;
+        }
+        
+        .options-panel.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        
+        .option-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .option-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .option-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+        }
+        
+        .option-title i {
+            margin-right: 10px;
+        }
+        
+        .option-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .option-btn {
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 1px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-shadow: var(--text-glow);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            cursor: pointer;
+        }
+        
+        .option-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .option-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Screenshots Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: rgba(25, 24, 24, 0.95);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 900px;
+            padding: 40px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 30px;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .close-modal:hover {
+            transform: rotate(90deg);
+            color: var(--secondary);
+        }
+        
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .modal-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-shadow: var(--primary-glow);
+            margin-bottom: 15px;
+        }
+        
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .screenshot-item {
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            height: 200px;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            filter: blur(5px);
+        }
+        
+        .screenshot-item:hover {
+            filter: blur(0);
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        
+        .screenshot-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .modal-actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        /* Download Button */
+        .launcher-download {
+            padding: 16px 50px;
+            font-size: 18px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 35px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .launcher-download:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Snow Canvas */
+        #snowCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .program-header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .program-header p {
+                font-size: 1.2rem;
+            }
+            
+            .settings-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .screenshots-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .program-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .settings-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .program-section, .settings-section {
+                padding: 25px;
+            }
+            
+            .modal-content {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 24px;
+            }
+            
+            .saturn-icon {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .saturn-icon::before {
+                width: 18px;
+                height: 18px;
+            }
+            
+            .saturn-icon::after {
+                width: 30px;
+                height: 6px;
+            }
+            
+            .program-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .program-header p {
+                font-size: 1.1rem;
+            }
+            
+            .settings-header h1 {
+                font-size: 2rem;
+            }
+            
+            .feature-box, .setting-card {
+                padding: 20px;
+            }
+            
+            .download-btn, .launcher-download {
+                padding: 14px 30px;
+                font-size: 16px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <div class="saturn-icon"></div>
+                RelaX Project
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#" class="tab-link active" data-tab="program">Программа</a></li>
+                    <li><a href="#" class="tab-link" data-tab="settings">Настройки</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <!-- Program Tab -->
+        <div id="program" class="tab-content active">
+            <div class="program-section">
+                <div class="program-header">
+                    <h1>Бесплатная Версия RelaX</h1>
+                    <p>Эксклюзивные цифровые решения в космическом стиле. Премиум качество для вашего комфорта и производительности.</p>
+                </div>
+                
+                <div class="program-features">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Молниеносная Скорость</h3>
+                        <p>Оптимизированные алгоритмы обеспечивают максимальную производительность даже на слабых устройствах.</p>
+                    </div>
+                    
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Превосходная Защита</h3>
+                        <p>Ваши данные под надежной защитой с использованием передовых технологий шифрования.</p>
+                    </div>
+                    
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-satellite"></i>
+                        </div>
+                        <h3>Космический Дизайн</h3>
+                        <p>Интерфейс в монохромных тонах создает атмосферу космической роскоши и комфорта во время работы.</p>
+                    </div>
+                </div>
+                
+                <div class="program-actions" style="text-align: center; margin-top: 50px;">
+                    <button class="download-btn" id="openScreenshots">
+                        <i class="fas fa-download"></i> Скачать Бесплатно
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Settings Tab -->
+        <div id="settings" class="tab-content">
+            <div class="settings-section">
+                <div class="settings-header">
+                    <h1>Настройки Программы</h1>
+                    <p>Персонализируйте ваше взаимодействие с RelaX Project</p>
+                </div>
+                
+                <div class="settings-options">
+                    <div class="setting-card" id="languageSetting">
+                        <h2><i class="fas fa-globe"></i> Язык</h2>
+                        <p>Выберите предпочитаемый язык интерфейса</p>
+                        <div class="options-panel" id="languageOptions">
+                            <div class="option-item">
+                                <div class="option-title"><i class="fas fa-language"></i> Доступные языки</div>
+                                <div class="option-buttons">
+                                    <div class="option-btn active" data-lang="ru">Русский</div>
+                                    <div class="option-btn" data-lang="en">English</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card" id="themeSetting">
+                        <h2><i class="fas fa-paint-brush"></i> Темы</h2>
+                        <p>Измените внешний вид программы</p>
+                        <div class="options-panel" id="themeOptions">
+                            <div class="option-item">
+                                <div class="option-title"><i class="fas fa-snowflake"></i> Эффект снега</div>
+                                <div class="option-buttons">
+                                    <div class="option-btn" id="snowOn">Включить</div>
+                                    <div class="option-btn active" id="snowOff">Выключить</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Screenshots Modal -->
+    <div class="modal" id="screenshotsModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="modal-header">
+                <h2>Скриншоты программы</h2>
+                <p>Посмотрите интерфейс программы перед загрузкой</p>
+            </div>
+            
+            <div class="screenshots-grid">
+                <div class="screenshot-item">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&q=80" alt="Интерфейс программы 1">
+                </div>
+                <div class="screenshot-item">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&q=80" alt="Интерфейс программы 2">
+                </div>
+                <div class="screenshot-item">
+                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&q=80" alt="Интерфейс программы 3">
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="launcher-download" id="downloadLauncher">
+                    <i class="fas fa-download"></i> Скачать лаунчер
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Snow Canvas -->
+    <canvas id="snowCanvas"></canvas>
+
+    <script>
+        // Translation dictionary
+        const translations = {
+            ru: {
+                programTab: "Программа",
+                settingsTab: "Настройки",
+                programTitle: "Бесплатная Версия RelaX",
+                programDesc: "Эксклюзивные цифровые решения в космическом стиле. Премиум качество для вашего комфорта и производительности.",
+                feature1: "Молниеносная Скорость",
+                feature1Desc: "Оптимизированные алгоритмы обеспечивают максимальную производительность даже на слабых устройствах.",
+                feature2: "Превосходная Защита",
+                feature2Desc: "Ваши данные под надежной защитой с использованием передовых технологий шифрования.",
+                feature3: "Космический Дизайн",
+                feature3Desc: "Интерфейс в монохромных тонах создает атмосферу космической роскоши и комфорта во время работы.",
+                downloadBtn: "Скачать Бесплатно",
+                settingsTitle: "Настройки Программы",
+                settingsDesc: "Персонализируйте ваше взаимодействие с RelaX Project",
+                language: "Язык",
+                languageDesc: "Выберите предпочитаемый язык интерфейса",
+                theme: "Темы",
+                themeDesc: "Измените внешний вид программы",
+                languages: "Доступные языки",
+                snowEffect: "Эффект снега",
+                snowOn: "Включить",
+                snowOff: "Выключить",
+                modalTitle: "Скриншоты программы",
+                modalDesc: "Посмотрите интерфейс программы перед загрузкой",
+                downloadLauncher: "Скачать лаунчер"
+            },
+            en: {
+                programTab: "Program",
+                settingsTab: "Settings",
+                programTitle: "Free Version of RelaX",
+                programDesc: "Exclusive digital solutions in cosmic style. Premium quality for your comfort and productivity.",
+                feature1: "Lightning Speed",
+                feature1Desc: "Optimized algorithms ensure maximum performance even on weak devices.",
+                feature2: "Excellent Protection",
+                feature2Desc: "Your data is securely protected using advanced encryption technologies.",
+                feature3: "Cosmic Design",
+                feature3Desc: "The monochrome interface creates an atmosphere of cosmic luxury and comfort during work.",
+                downloadBtn: "Download Free",
+                settingsTitle: "Program Settings",
+                settingsDesc: "Personalize your interaction with RelaX Project",
+                language: "Language",
+                languageDesc: "Select your preferred interface language",
+                theme: "Themes",
+                themeDesc: "Change the appearance of the program",
+                languages: "Available Languages",
+                snowEffect: "Snow Effect",
+                snowOn: "Enable",
+                snowOff: "Disable",
+                modalTitle: "Program Screenshots",
+                modalDesc: "View the program interface before downloading",
+                downloadLauncher: "Download Launcher"
+            }
+        };
+
+        // Current language
+        let currentLang = 'ru';
+        
+        // Tab switching
+        document.querySelectorAll('.tab-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all tabs and links
+                document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to current tab
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Settings panels toggle
+        document.querySelectorAll('.setting-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const panelId = this.id.replace('Setting', 'Options');
+                const panel = document.getElementById(panelId);
+                
+                // Toggle the panel
+                panel.classList.toggle('active');
+                
+                // Close other panels
+                document.querySelectorAll('.options-panel').forEach(p => {
+                    if(p.id !== panelId) {
+                        p.classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        // Language selection
+        document.querySelectorAll('.option-btn[data-lang]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons in this group
+                this.parentNode.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Set new language
+                const lang = this.getAttribute('data-lang');
+                currentLang = lang;
+                
+                // Update UI
+                updateLanguage();
+                
+                // Show notification
+                showNotification(lang === 'ru' ? 'Язык изменен на Русский' : 'Language changed to English');
+            });
+        });
+        
+        // Update UI language
+        function updateLanguage() {
+            const langData = translations[currentLang];
+            
+            // Update tab names
+            document.querySelector('[data-tab="program"]').textContent = langData.programTab;
+            document.querySelector('[data-tab="settings"]').textContent = langData.settingsTab;
+            
+            // Update program section
+            document.querySelector('.program-header h1').textContent = langData.programTitle;
+            document.querySelector('.program-header p').textContent = langData.programDesc;
+            
+            // Update features
+            const features = document.querySelectorAll('.feature-box h3');
+            features[0].textContent = langData.feature1;
+            features[1].textContent = langData.feature2;
+            features[2].textContent = langData.feature3;
+            
+            const featureDescs = document.querySelectorAll('.feature-box p');
+            featureDescs[0].textContent = langData.feature1Desc;
+            featureDescs[1].textContent = langData.feature2Desc;
+            featureDescs[2].textContent = langData.feature3Desc;
+            
+            // Update download button
+            document.querySelector('.download-btn').innerHTML = `<i class="fas fa-download"></i> ${langData.downloadBtn}`;
+            
+            // Update settings section
+            document.querySelector('.settings-header h1').textContent = langData.settingsTitle;
+            document.querySelector('.settings-header p').textContent = langData.settingsDesc;
+            
+            // Update settings cards
+            document.querySelector('#languageSetting h2').innerHTML = `<i class="fas fa-globe"></i> ${langData.language}`;
+            document.querySelector('#languageSetting p').textContent = langData.languageDesc;
+            
+            document.querySelector('#themeSetting h2').innerHTML = `<i class="fas fa-paint-brush"></i> ${langData.theme}`;
+            document.querySelector('#themeSetting p').textContent = langData.themeDesc;
+            
+            // Update options
+            document.querySelector('#languageOptions .option-title').innerHTML = `<i class="fas fa-language"></i> ${langData.languages}`;
+            document.querySelector('#themeOptions .option-title').innerHTML = `<i class="fas fa-snowflake"></i> ${langData.snowEffect}`;
+            
+            // Update buttons
+            document.querySelector('#snowOn').textContent = langData.snowOn;
+            document.querySelector('#snowOff').textContent = langData.snowOff;
+            
+            // Update modal
+            document.querySelector('.modal-header h2').textContent = langData.modalTitle;
+            document.querySelector('.modal-header p').textContent = langData.modalDesc;
+            document.querySelector('#downloadLauncher').innerHTML = `<i class="fas fa-download"></i> ${langData.downloadLauncher}`;
+        }
+        
+        // Snow effect toggle
+        document.getElementById('snowOn').addEventListener('click', function() {
+            // Remove active class from all buttons in this group
+            this.parentNode.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Enable snow effect
+            snowEffect(true);
+            
+            // Show notification
+            showNotification(currentLang === 'ru' ? 'Эффект снега включен' : 'Snow effect enabled');
+        });
+        
+        document.getElementById('snowOff').addEventListener('click', function() {
+            // Remove active class from all buttons in this group
+            this.parentNode.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Disable snow effect
+            snowEffect(false);
+            
+            // Show notification
+            showNotification(currentLang === 'ru' ? 'Эффект снега выключен' : 'Snow effect disabled');
+        });
+        
+        // Snow effect implementation
+        function snowEffect(enable) {
+            const canvas = document.getElementById('snowCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            if (!enable) {
+                canvas.style.display = 'none';
+                return;
+            }
+            
+            canvas.style.display = 'block';
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // Create snowflakes
+            const snowflakes = [];
+            const flakeCount = 150;
+            
+            for (let i = 0; i < flakeCount; i++) {
+                snowflakes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 3 + 1,
+                    speed: Math.random() * 2 + 1,
+                    opacity: Math.random() * 0.5 + 0.5
+                });
+            }
+            
+            // Draw snowflakes
+            function drawSnow() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.beginPath();
+                
+                for (let i = 0; i < flakeCount; i++) {
+                    const flake = snowflakes[i];
+                    ctx.moveTo(flake.x, flake.y);
+                    ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+                }
+                
+                ctx.fill();
+                updateSnow();
+            }
+            
+            // Update snowflakes position
+            function updateSnow() {
+                for (let i = 0; i < flakeCount; i++) {
+                    const flake = snowflakes[i];
+                    
+                    flake.y += flake.speed;
+                    
+                    if (flake.y > canvas.height) {
+                        flake.y = 0;
+                        flake.x = Math.random() * canvas.width;
+                    }
+                }
+            }
+            
+            // Animation loop
+            function animateSnow() {
+                if (canvas.style.display === 'none') return;
+                
+                drawSnow();
+                requestAnimationFrame(animateSnow);
+            }
+            
+            // Start animation
+            animateSnow();
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+        
+        // Notification function
+        function showNotification(message) {
+            // Remove existing notification if any
+            const existingNote = document.querySelector('.notification');
+            if (existingNote) existingNote.remove();
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            // Style notification
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = 'rgba(30, 29, 29, 0.9)';
+            notification.style.color = '#fff';
+            notification.style.padding = '15px 25px';
+            notification.style.borderRadius = '8px';
+            notification.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+            notification.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
+            notification.style.zIndex = '10000';
+            notification.style.fontSize = '16px';
+            notification.style.fontWeight = '600';
+            notification.style.transition = 'all 0.3s ease';
+            notification.style.transform = 'translateY(100px)';
+            notification.style.opacity = '0';
+            
+            // Add to document
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateY(0)';
+                notification.style.opacity = '1';
+            }, 10);
+            
+            // Remove after delay
+            setTimeout(() => {
+                notification.style.transform = 'translateY(100px)';
+                notification.style.opacity = '0';
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // Screenshots modal functionality
+        document.getElementById('openScreenshots').addEventListener('click', function() {
+            document.getElementById('screenshotsModal').style.display = 'flex';
+        });
+        
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('screenshotsModal').style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('screenshotsModal')) {
+                document.getElementById('screenshotsModal').style.display = 'none';
+            }
+        });
+        
+        // Download launcher button
+        document.getElementById('downloadLauncher').addEventListener('click', function() {
+            showNotification(currentLang === 'ru' ? 'Начата загрузка лаунчера...' : 'Launcher download started...');
+            
+            // Simulate download delay
+            setTimeout(() => {
+                showNotification(currentLang === 'ru' ? 'Лаунчер успешно загружен!' : 'Launcher downloaded successfully!');
+            }, 2000);
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Random rotation for Saturn icons
+        const saturnIcons = document.querySelectorAll('.saturn-icon');
+        saturnIcons.forEach(icon => {
+            const randomRotation = Math.floor(Math.random() * 360);
+            icon.style.transform = `rotate(${randomRotation}deg)`;
+        });
+    </script>
+</body>
+</html>
